@@ -3,5 +3,5 @@ jwplayer-with dynamic size from resource android
 
 # reference
 
-- https://github.com/jwplayer/jwplayer-sdk-android-demo
+- official Jw Player :  https://github.com/jwplayer/jwplayer-sdk-android-demo
 
