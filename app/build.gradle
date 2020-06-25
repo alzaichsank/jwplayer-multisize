@@ -36,10 +36,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     /*jw player*/
-    implementation 'com.longtailvideo.jwplayer:jwplayer-core:3.4.3+'
-    implementation 'com.longtailvideo.jwplayer:jwplayer-common:3.4.3+'
-    implementation 'com.longtailvideo.jwplayer:jwplayer-ima:3.4.3+'
-    implementation 'com.longtailvideo.jwplayer:jwplayer-chromecast:3.4.3+'
+    implementation "com.longtailvideo.jwplayer:jwplayer-core:$jw_version"
+    implementation "com.longtailvideo.jwplayer:jwplayer-common:$jw_version"
+    implementation "com.longtailvideo.jwplayer:jwplayer-ima:$jw_version"
+    implementation "com.longtailvideo.jwplayer:jwplayer-chromecast:$jw_version"
 
 
 }

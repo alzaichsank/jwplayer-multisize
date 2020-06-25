@@ -1356,6 +1356,7 @@ class CallbackScreen : LinearLayout, OnIdleListener, OnBufferListener, OnPlayLis
             
             /// onMeta END ///
             """.trimIndent()
+        Log.d("MetaListener", "onMeta: ${prefix + body + suffix}")
         setOutput(prefix + body + suffix)
     }
 
