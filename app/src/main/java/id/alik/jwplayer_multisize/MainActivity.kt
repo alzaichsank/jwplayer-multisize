@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import com.longtailvideo.jwplayer.events.FullscreenEvent
 import com.longtailvideo.jwplayer.events.listeners.VideoPlayerEvents.OnFullscreenListener
 import com.longtailvideo.jwplayer.media.playlists.PlaylistItem
@@ -64,8 +66,12 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
     }
 
     private fun onPlayerPlay() {
+        (jwplayer.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio = "H, 16:9"
         when (caseVideo) {
             0 -> {
+                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    dimensionRatio = "H, 1:1"
+                }
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/DEo3mNCR-KRDSK1u4.mp4")
                     .title("Vertical Video Mobile Camera ")
@@ -75,6 +81,9 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
                 jwplayer.play()
             }
             1 -> {
+                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    dimensionRatio = "H, 1:1"
+                }
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/DtyUK4cS-KRDSK1u4.mp4")
                     .title("Vertical Youtube Video Clip")
@@ -84,6 +93,9 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
                 jwplayer.play()
             }
             2 -> {
+                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    dimensionRatio = "H, 4:3"
+                }
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/FhQBYmLN-Yd9Pisb4.mp4")
                     .title("Horizontal ratio 4:3")
@@ -93,6 +105,9 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
                 jwplayer.play()
             }
             3 -> {
+                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    dimensionRatio = "H, 21:9"
+                }
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/aeIsjyFA-Yd9Pisb4.mp4")
                     .title("Horizontal ratio 21:9")
@@ -102,6 +117,9 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
                 jwplayer.play()
             }
             4 -> {
+                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    dimensionRatio = "H, 16:9"
+                }
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/M21Ck8Bi-KRDSK1u4.mp4")
                     .title("Horizontal ratio 16:9")
