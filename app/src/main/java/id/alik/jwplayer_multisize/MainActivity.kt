@@ -1,7 +1,9 @@
 package id.alik.jwplayer_multisize
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.longtailvideo.jwplayer.events.FullscreenEvent
 import com.longtailvideo.jwplayer.events.listeners.VideoPlayerEvents.OnFullscreenListener
@@ -17,7 +19,6 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
         setContentView(R.layout.activity_main)
         initView()
     }
-
 
     private fun initView() {
         jwplayer.addOnFullscreenListener(this)
@@ -114,9 +115,56 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
         Log.d("checked width", "checked width: ${jwplayer?.width}")
     }
 
+    override fun onStart() {
+        super.onStart()
+        jwplayer.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        jwplayer.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        jwplayer.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        jwplayer.onDestroy()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        jwplayer.onStop()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        jwplayer.setFullscreen(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE, true)
+        super.onConfigurationChanged(newConfig)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if(jwplayer.fullscreen){
+                jwplayer.setFullscreen(false,true)
+                return false
+            }
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
     override fun onFullscreen(fullscreenEvent: FullscreenEvent?) {
         Log.d("checked", "onFullscreen: ")
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            if (fullscreenEvent!!.fullscreen) {
+                actionBar.hide()
+            } else {
+                actionBar.show()
+            }
+        }
     }
 
 }
