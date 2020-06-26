@@ -1,9 +1,11 @@
 package id.alik.jwplayer_multisize
 
+import android.animation.ValueAnimator
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
 
     private fun initAction() {
         rg_size.setOnCheckedChangeListener { group, checkedId ->
-            when(checkedId){
+            when (checkedId) {
                 R.id.rb_vcm -> {
                     caseVideo = 0
                     Log.d("checked casevideo 0", "onClick: $caseVideo")
@@ -66,12 +68,13 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
     }
 
     private fun onPlayerPlay() {
-        (jwplayer.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio = "H, 16:9"
         when (caseVideo) {
             0 -> {
-                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    dimensionRatio = "H, 1:1"
-                }
+//                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+//                    dimensionRatio = "H, 1:1"
+//                }
+//                checkMeasure()
+                increaseViewSize(jwplayer, 1000)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/DEo3mNCR-KRDSK1u4.mp4")
                     .title("Vertical Video Mobile Camera ")
@@ -81,9 +84,11 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
                 jwplayer.play()
             }
             1 -> {
-                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    dimensionRatio = "H, 1:1"
-                }
+//                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+//                    dimensionRatio = "H, 1:1"
+//                }
+//                checkMeasure()
+                increaseViewSize(jwplayer, 1000)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/DtyUK4cS-KRDSK1u4.mp4")
                     .title("Vertical Youtube Video Clip")
@@ -93,9 +98,11 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
                 jwplayer.play()
             }
             2 -> {
-                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    dimensionRatio = "H, 4:3"
-                }
+//                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+//                    dimensionRatio = "H, 4:3"
+//                }
+//                checkMeasure()
+                increaseViewSize(jwplayer, -100)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/FhQBYmLN-Yd9Pisb4.mp4")
                     .title("Horizontal ratio 4:3")
@@ -105,9 +112,11 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
                 jwplayer.play()
             }
             3 -> {
-                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    dimensionRatio = "H, 21:9"
-                }
+//                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+//                    dimensionRatio = "H, 21:9"
+//                }
+                checkMeasure()
+                increaseViewSize(jwplayer, -200)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/aeIsjyFA-Yd9Pisb4.mp4")
                     .title("Horizontal ratio 21:9")
@@ -117,9 +126,11 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
                 jwplayer.play()
             }
             4 -> {
-                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    dimensionRatio = "H, 16:9"
-                }
+//                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+//                    dimensionRatio = "H, 16:9"
+//                }
+//                checkMeasure()
+                increaseViewSize(jwplayer, -150)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/M21Ck8Bi-KRDSK1u4.mp4")
                     .title("Horizontal ratio 16:9")
@@ -131,6 +142,56 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
         }
         Log.d("checked height", "checked height: ${jwplayer?.height}")
         Log.d("checked width", "checked width: ${jwplayer?.width}")
+    }
+
+    private fun checkMeasure() {
+        (jwplayer.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio = "H, 16:9"
+        var heightSource = 0
+        var widthSource = 0
+        var ratio = 0
+        var newHeight = 0
+        jwplayer.addOnMetaListener {
+            heightSource = it.metadata.height
+            widthSource = it.metadata.width
+        }
+        when {
+            heightSource > widthSource -> {
+                Log.d(
+                    "vertical view", "checkMeasure: heightSource $heightSource " +
+                            "widthSource $widthSource"
+                )
+                ratio = heightSource / widthSource
+                newHeight = activity_main.height / ratio
+
+                jwplayer.measure(jwplayer.width, heightSource)
+            }
+            else -> {
+                Log.d(
+                    "horizontal view", "checkMeasure: heightSource $heightSource " +
+                            "widthSource $widthSource"
+                )
+                jwplayer.measure(jwplayer.width, heightSource)
+            }
+
+        }
+        jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+
+        }
+        Log.d("jwheight", "checkMeasure: ${jwplayer.height} ")
+
+    }
+
+    private fun increaseViewSize(view: View, increaseValue: Int) {
+        val valueAnimator =
+            ValueAnimator.ofInt(view.measuredHeight, view.measuredHeight + increaseValue)
+        valueAnimator.duration = 500L
+        valueAnimator.addUpdateListener {
+            val animatedValue = valueAnimator.animatedValue as Int
+            val layoutParams = view.layoutParams
+            layoutParams.height = animatedValue
+            view.layoutParams = layoutParams
+        }
+        valueAnimator.start()
     }
 
     override fun onStart() {
@@ -164,9 +225,9 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            if(jwplayer.fullscreen){
-                jwplayer.setFullscreen(false,true)
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (jwplayer.fullscreen) {
+                jwplayer.setFullscreen(false, true)
                 return false
             }
         }
