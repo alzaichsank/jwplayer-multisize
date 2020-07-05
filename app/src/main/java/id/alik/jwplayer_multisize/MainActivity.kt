@@ -73,8 +73,8 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
 //                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
 //                    dimensionRatio = "H, 1:1"
 //                }
-//                checkMeasure()
-                increaseViewSize(jwplayer, 1000)
+                checkMeasure()
+//                increaseViewSize(jwplayer, 1000)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/DEo3mNCR-KRDSK1u4.mp4")
                     .title("Vertical Video Mobile Camera ")
@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
 //                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
 //                    dimensionRatio = "H, 1:1"
 //                }
-//                checkMeasure()
-                increaseViewSize(jwplayer, 1000)
+                checkMeasure()
+//                increaseViewSize(jwplayer, 1000)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/DtyUK4cS-KRDSK1u4.mp4")
                     .title("Vertical Youtube Video Clip")
@@ -101,8 +101,8 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
 //                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
 //                    dimensionRatio = "H, 4:3"
 //                }
-//                checkMeasure()
-                increaseViewSize(jwplayer, -100)
+                checkMeasure()
+//                increaseViewSize(jwplayer, -100)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/FhQBYmLN-Yd9Pisb4.mp4")
                     .title("Horizontal ratio 4:3")
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
 //                    dimensionRatio = "H, 21:9"
 //                }
                 checkMeasure()
-                increaseViewSize(jwplayer, -200)
+//                increaseViewSize(jwplayer, -200)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/aeIsjyFA-Yd9Pisb4.mp4")
                     .title("Horizontal ratio 21:9")
@@ -129,8 +129,8 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
 //                jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
 //                    dimensionRatio = "H, 16:9"
 //                }
-//                checkMeasure()
-                increaseViewSize(jwplayer, -150)
+                checkMeasure()
+//                increaseViewSize(jwplayer, -150)
                 val playlistItem = PlaylistItem.Builder()
                     .file("https://content.jwplatform.com/videos/M21Ck8Bi-KRDSK1u4.mp4")
                     .title("Horizontal ratio 16:9")
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
         when {
             heightSource > widthSource -> {
                 Log.d(
-                    "vertical view", "checkMeasure: heightSource $heightSource " +
+                    "checked vertical view", "checkMeasure: heightSource $heightSource " +
                             "widthSource $widthSource"
                 )
                 ratio = heightSource / widthSource
@@ -167,17 +167,17 @@ class MainActivity : AppCompatActivity(), OnFullscreenListener {
             }
             else -> {
                 Log.d(
-                    "horizontal view", "checkMeasure: heightSource $heightSource " +
+                    "checked horizontal view", "checkMeasure: heightSource $heightSource " +
                             "widthSource $widthSource"
                 )
                 jwplayer.measure(jwplayer.width, heightSource)
             }
 
         }
-        jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
-
-        }
-        Log.d("jwheight", "checkMeasure: ${jwplayer.height} ")
+//        jwplayer.updateLayoutParams<ConstraintLayout.LayoutParams> {
+//
+//        }
+        Log.d("checked jwheight", "checkMeasure: ${jwplayer.height} ")
 
     }
 
